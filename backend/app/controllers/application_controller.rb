@@ -30,5 +30,8 @@ class ApplicationController < ActionController::Base
         render plain: "Error: #{e.message}", status: :bad_request
       end
     end
+    def options
+      head :ok
+    end
   end
   

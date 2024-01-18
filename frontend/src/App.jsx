@@ -3,9 +3,11 @@ import "./App.css";
 
 function App() {
   const [display, setDisplay] = useState("");
+
   const appendToDisplay = (value) => {
     setDisplay((prevDisplay) => prevDisplay + value);
   };
+
   const clearDisplay = () => {
     setDisplay("");
   };
@@ -32,29 +34,66 @@ function App() {
     }
   };
 
+  const handleButtonClick = (value) => {
+    switch (value) {
+      case "=":
+        calculate();
+        break;
+      case "AC":
+        clearDisplay();
+        break;
+      default:
+        appendToDisplay(value);
+        break;
+    }
+  };
+
+  const renderButtons = () => {
+    const buttons = [
+      "1",
+      "2",
+      "3",
+      "+",
+      "4",
+      "5",
+      "6",
+      "-",
+      "7",
+      "8",
+      "9",
+      "/",
+      "0",
+      "AC",
+      "=",
+      "*",
+    ];
+
+    return buttons.map((button, index) => (
+      <p
+        key={index}
+        className={`border border-gray-500 p-2 px-[${
+          button === "AC" ? 10 : 3
+        }px] rounded-lg hover:scale-105 hover:bg-green-400 cursor-pointer bg-slate-400 text-white`}
+        onClick={() => handleButtonClick(button)}
+      >
+        {button}
+      </p>
+    ));
+  };
+
   return (
     <div>
-      <input type="text" value={display} readOnly />
-      <br />
-      <button onClick={() => appendToDisplay("1")}>1</button>
-      <button onClick={() => appendToDisplay("2")}>2</button>
-      <button onClick={() => appendToDisplay("3")}>3</button>
-      <button onClick={() => appendToDisplay("+")}>+</button>
-      <br />
-      <button onClick={() => appendToDisplay("4")}>4</button>
-      <button onClick={() => appendToDisplay("5")}>5</button>
-      <button onClick={() => appendToDisplay("6")}>6</button>
-      <button onClick={() => appendToDisplay("-")}>-</button>
-      <br />
-      <button onClick={() => appendToDisplay("7")}>7</button>
-      <button onClick={() => appendToDisplay("8")}>8</button>
-      <button onClick={() => appendToDisplay("9")}>9</button>
-      <button onClick={() => appendToDisplay("*")}>*</button>
-      <br />
-      <button onClick={() => appendToDisplay("0")}>0</button>
-      <button onClick={clearDisplay}>C</button>
-      <button onClick={calculate}>=</button>
-      <button onClick={() => appendToDisplay("/")}>/</button>
+      <h1 className="text-center mt-10 text-3xl">Easy Calculator</h1>
+      <section className="bg-slate-200 h-[65dvh] w-[35dvh] align-middle justify-center m-auto mt-[7dvh] pt-[10dvh] rounded-3xl shadow-xl sm:h-[55dvh] sm:w-[30dvh] lg:h-[55dvh] lg:w-[32dvh] md:h-[60dvh] md:w-[33dvh]">
+        <input
+          readOnly
+          value={display}
+          className="border flex border-black py-2 px-5 rounded-lg m-auto outline-none w-[30dvh] sm:w-[20dvh] lg:w-[15dvh] lg:h-[7dvh]"
+        ></input>
+        <div className="grid grid-cols-4 gap-5 justify-center mt-[7dvh] ml-5 mr-5 text-center">
+          {renderButtons()}
+        </div>
+      </section>
     </div>
   );
 }
